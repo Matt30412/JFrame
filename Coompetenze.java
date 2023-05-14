@@ -59,7 +59,7 @@ public class Coompetenze extends JFrame {
 		getContentPane().add(lblNewLabel_2);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(31, 46, 237, 172);
+		textArea.setBounds(31, 46, 237, 77);
 		getContentPane().add(textArea);
 		
 		textdatI = new JTextField();
@@ -81,6 +81,18 @@ public class Coompetenze extends JFrame {
 		lblNewLabel_3.setBounds(318, 158, 66, 14);
 		getContentPane().add(lblNewLabel_3);
 		
+		
+		JLabel lblNewLabel_4 = new JLabel("    Inserie file (opzionale)");
+		lblNewLabel_4.setBounds(95, 134, 127, 14);
+		getContentPane().add(lblNewLabel_4);
+		
+		JTextArea textblob = new JTextArea();
+		textblob.setBounds(95, 153, 133, 45);
+		getContentPane().add(textblob);
+		
+		
+		
+		
 		Button buttonC = new Button("Inserisci altre competenze");
 		buttonC.setForeground(new Color(255, 255, 255));
 		buttonC.setBackground(new Color(255, 0, 0));
@@ -92,24 +104,28 @@ public class Coompetenze extends JFrame {
 					String dataInizio = textdatI.getText();
 					String dataFine = textdataF.getText();
 					String Email = textEmail.getText();
-					
+					String Blob = textblob.getText();
 					
 					 try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/SM", "root", "")) {
 						 
 						 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
 						 Date dataI = dateFormat.parse(dataInizio);
 						 Date dataF = dateFormat.parse(dataFine);
+						 
+						 
 					String sql = "INSET INTO Competenze (Competenze, Email, dataInizio, dataFine) VALUE('"+competenze+"','"+Email+"','"+dataI+"','"+dataF+"');";	
-					
+					Statement stmt2 = connection.createStatement();
+					stmt2.executeUpdate(sql);
 						 
 					 } catch (SQLException | ParseException e1) {
 					        System.out.println("Errore durante l'accesso al database: " + e1.getMessage());
 					    }
 						 
-					 
-				MainFrame frame = new MainFrame();
-				frame.show();
-				comp.setVisible(false);
+					 comp.setVisible(false);
+					 comp = new Coompetenze();
+				
+				
+				
 				
 				
 				
@@ -136,17 +152,23 @@ public class Coompetenze extends JFrame {
 					 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
 					 Date dataI = dateFormat.parse(dataInizio);
 					 Date dataF = dateFormat.parse(dataFine);
-				String sql = "INSET INTO Competenze (Competenze, Email, dataInizio, dataFine) VALUE('"+competenze+"','"+Email+"','"+dataI+"','"+dataF+"');";	
-				
+				String sql1 = "INSET INTO Competenze (Competenze, Email, dataInizio, dataFine) VALUE('"+competenze+"','"+Email+"','"+dataI+"','"+dataF+"');";	
+				Statement stmt3 = connection.createStatement();
+				stmt3.executeUpdate(sql1);
 					 
 				 } catch (SQLException | ParseException e1) {
 				        System.out.println("Errore durante l'accesso al database: " + e1.getMessage());
 				    }
 					 
-				 
+					MainFrame frame = new MainFrame();
+					frame.show();
+					comp.setVisible(false);
+					
 			}
 		});
 		buttonInsert.setBounds(238, 224, 127, 27);
 		getContentPane().add(buttonInsert);
+		
+		
 	}
 }
