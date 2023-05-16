@@ -1,0 +1,12 @@
+CREATE TABLE `competenze` (
+	`Email` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`Competenze` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`Competenzefile` MEDIUMBLOB NULL DEFAULT NULL,
+	`DataI` DATE NULL DEFAULT NULL,
+	`DataF` DATE NULL DEFAULT NULL,
+	`votoskill` INT(1) NULL DEFAULT NULL,
+	INDEX `Email` (`Email`) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
