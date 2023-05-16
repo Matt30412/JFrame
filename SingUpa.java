@@ -24,7 +24,7 @@ public class SingUpa extends JDialog {
 	private JTextField textPassword;
 	private JTextField textCV;
 	protected Connection connection;
-	static SingUpa SingUp;
+    static SingUpa Singup; 
 	private JTextField textSkill;
 	private JTextField textCodice;
 	private JTextField textDI;
@@ -164,12 +164,13 @@ public class SingUpa extends JDialog {
 					
 				int sk = Integer.parseInt(skill);
 				int c = Integer.parseInt(controllo);
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 				Date dateI = dateFormat.parse(DataInizio);
 				Date dateF = dateFormat.parse(DataFine);
-				
+				java.sql.Date sqlDate = new java.sql.Date(dateI.getTime());
+				java.sql.Date sqlDate1 = new java.sql.Date(dateF.getTime());
 
-					String query = "INSERT INTO utente (Nome, Cognome, Email, Password, CV, Skill, Controllo, DataI, DataF)  VALUES ('"+ nome + "' , + '" + cognome + "'  ,  '" + email + "'  ,'" + password + "'  , '"+ cv + "', '"+ sk+ "' , '"+ c +"', '"+dateI+"','"+dateF+"');";
+					String query = "INSERT INTO utente (Nome, Cognome, Email, Password, CV, Skill, Controllo, DataI, DataF)  VALUES ('"+ nome + "' , + '" + cognome + "'  ,  '" + email + "'  ,'" + password + "'  , '"+ cv + "', '"+ sk+ "' , '"+ c +"', '"+sqlDate+"','"+sqlDate1+"');";
 					Statement stmt2 = connection.createStatement();
 					int i = stmt2.executeUpdate(query);
 					
@@ -177,7 +178,7 @@ public class SingUpa extends JDialog {
 				           
 						MainFrame Login = new MainFrame();
 						Login.show();
-						SingUp.setVisible(false);
+						Singup.show(false);
 						 
 						 
 				       } else {
@@ -224,7 +225,7 @@ public class SingUpa extends JDialog {
 						// TODO Auto-generated method stub
 					Coompetenze competenze =  new Coompetenze();
 					competenze.show();
-					SingUp.setVisible(false);
+					Singup.setVisible(false);
 					
 						
 					}

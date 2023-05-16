@@ -178,16 +178,7 @@ public class MainFrame extends JFrame {
 			
 			
 		
-//			al posto di un if dovresti vedere il vecchio programma per capire come hai fatto li, e dovresti replicare a fare la stessa cosa
-				
-//				if(User.compareTo(UserInserita)== 0) {
-//					
-//					
-//						//Mostriamo 2° JFrame
-//						
-//						Secondario finestra2 = new Secondario();
-//						finestra2.show();
-//						frame.setVisible(false);
+//			
 //					}
 //					
 //			}
