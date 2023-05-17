@@ -85,16 +85,22 @@ public class CVPage extends JFrame {
 				try{Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/SM", "root", "");
 				
 				StringBuilder sb = new StringBuilder();
-				String sql = "SELECT C.Competenze, U.DataI, U.DataF FROM competenze C, utente U WHERE C.Email = ?";
+				String sql = "SELECT  C.Competenze as Competenze1, C.DataI AS DataInizio, C.DataF AS DataFine, U.CV as Competenze, U.DataI AS DataInizio, U.DataF AS DataFIne FROM competenze C, utente U         ON C.Email = U.Email      WHERE C.Email = ?  ";
 				PreparedStatement stmt = connection.prepareStatement(sql);
 				stmt.setString(1, EMAIL);
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next()) {
-				    String competenze = rs.getString("C.Competenze");
+				   
+					String ccompetenze = rs.getString("C.Competenze");
+					String ucompetenze = rs.getString("U.CV");
+					String cdataI = rs.getString("C.DataI");
+				    String cdataF = rs.getString("C.DataF");
 				    String dataI = rs.getString("U.DataI");
 				    String dataF = rs.getString("U.DataF");
-
-				    sb.append(competenze).append(" - ").append(dataI).append(" - ").append(dataF).append('\n');
+				    
+				    
+				    
+				    sb.append(ccompetenze).append(" - ").append(ucompetenze).append(dataI).append(" - ").append(dataF).append(cdataI).append(" - ").append(cdataF).append('\n');
 				                   }
 
 				String competenzeConcatenate = sb.toString();

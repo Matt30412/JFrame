@@ -144,7 +144,12 @@ public class MainFrame extends JFrame {
 		        	
 			        
 			        
-				 						}else 
+				 						}else {
+				 					Coompetenze comp = new Coompetenze();
+				 					comp.show();
+				 					frame.setVisible(false);
+				 					
+				 						}	
 
                   {
 					

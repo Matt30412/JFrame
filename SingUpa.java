@@ -53,8 +53,9 @@ public class SingUpa extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
+		
 		textNome = new JTextField();
-		textNome.setBounds(88, 11, 143, 20);
+		textNome.setBounds(88, 10, 143, 20);
 		contentPanel.add(textNome);
 		textNome.setColumns(10);
 		
@@ -74,7 +75,7 @@ public class SingUpa extends JDialog {
 		textPassword.setColumns(10);
 		
 		textCV = new JTextField();
-		textCV.setBounds(88, 172, 143, 53);
+		textCV.setBounds(88, 136, 143, 53);
 		contentPanel.add(textCV);
 		textCV.setColumns(10);
 		
@@ -89,7 +90,7 @@ public class SingUpa extends JDialog {
 		contentPanel.add(lbPassword);
 		
 		JLabel lbCV = new JLabel("CV");
-		lbCV.setBounds(10, 191, 46, 14);
+		lbCV.setBounds(24, 155, 46, 14);
 		contentPanel.add(lbCV);
 		
 		JLabel lbCognome = new JLabel("Cognome : ");
@@ -101,39 +102,39 @@ public class SingUpa extends JDialog {
 		contentPanel.add(lbEmail);
 		
 		JLabel lbskill = new JLabel("Voto Skill : ");
-		lbskill.setBounds(10, 144, 78, 16);
+		lbskill.setBounds(10, 197, 78, 16);
 		contentPanel.add(lbskill);
 		
 		textSkill = new JTextField();
-		textSkill.setBounds(86, 140, 145, 20);
+		textSkill.setBounds(88, 201, 145, 20);
 		contentPanel.add(textSkill);
 		textSkill.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Codice  : ");
-		lblNewLabel.setBounds(268, 13, 55, 16);
+		JLabel lblNewLabel = new JLabel("Codice  Accesso  : ");
+		lblNewLabel.setBounds(271, 75, 129, 16);
 		contentPanel.add(lblNewLabel);
 		
 		textCodice = new JTextField();
-		textCodice.setBounds(335, 11, 78, 20);
+		textCodice.setBounds(294, 104, 78, 20);
 		contentPanel.add(textCodice);
 		textCodice.setColumns(10);
 		
 		textDI = new JTextField();
-		textDI.setBounds(335, 42, 77, 20);
+		textDI.setBounds(336, 10, 77, 20);
 		contentPanel.add(textDI);
 		textDI.setColumns(10);
 		
 		textDF = new JTextField();
 		textDF.setColumns(10);
-		textDF.setBounds(336, 73, 77, 20);
+		textDF.setBounds(336, 42, 77, 20);
 		contentPanel.add(textDF);
 		
 		JLabel lblNewLabel_1 = new JLabel("Data Inizio : ");
-		lblNewLabel_1.setBounds(249, 44, 74, 16);
+		lblNewLabel_1.setBounds(249, 12, 74, 16);
 		contentPanel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Data FIne : ");
-		lblNewLabel_1_1.setBounds(249, 75, 74, 16);
+		lblNewLabel_1_1.setBounds(249, 40, 74, 16);
 		contentPanel.add(lblNewLabel_1_1);
 		{
 			JPanel buttonPane = new JPanel();
@@ -170,7 +171,7 @@ public class SingUpa extends JDialog {
 				java.sql.Date sqlDate = new java.sql.Date(dateI.getTime());
 				java.sql.Date sqlDate1 = new java.sql.Date(dateF.getTime());
 
-					String query = "INSERT INTO utente (Nome, Cognome, Email, Password, CV, Skill, Controllo, DataI, DataF)  VALUES ('"+ nome + "' , + '" + cognome + "'  ,  '" + email + "'  ,'" + password + "'  , '"+ cv + "', '"+ sk+ "' , '"+ c +"', '"+sqlDate+"','"+sqlDate1+"');";
+					String query = "INSERT INTO utente (Nome, Cognome, Email, Password, CV, Skill, Controllo, DataI, DataF )  VALUES ('"+ nome + "' , + '" + cognome + "'  ,  '" + email + "'  ,'" + password + "'  , '"+ cv + "', '"+ sk+ "' , '"+ c +"', '"+sqlDate+"','"+sqlDate1+"');";
 					Statement stmt2 = connection.createStatement();
 					int i = stmt2.executeUpdate(query);
 					
@@ -215,7 +216,7 @@ public class SingUpa extends JDialog {
 				
 			}
 			
-				JButton NewCompBTN = new JButton("Nuove Competenze");
+				JButton NewCompBTN = new JButton("Altre Competenze");
 				NewCompBTN.setActionCommand("Cancel");
 				buttonPane.add(NewCompBTN);
 				NewCompBTN.addActionListener(new ActionListener() {
@@ -223,9 +224,57 @@ public class SingUpa extends JDialog {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-					Coompetenze competenze =  new Coompetenze();
-					competenze.show();
-					Singup.setVisible(false);
+						
+						
+						String nome = textNome.getText();
+						String cognome = textCognome.getText();						
+						String  email = textEmail.getText();
+						String password = textPassword.getText();
+						String skill = textSkill.getText();
+						String cv = textCV.getText();
+						String controllo = textCodice.getText();
+						String DataInizio = textDI.getText();
+						String DataFine = textDF.getText();
+						
+						 
+							try { connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/SM", "root", "");
+								
+							int sk = Integer.parseInt(skill);
+							int c = Integer.parseInt(controllo);
+							SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+							Date dateI = dateFormat.parse(DataInizio);
+							Date dateF = dateFormat.parse(DataFine);
+							java.sql.Date sqlDate = new java.sql.Date(dateI.getTime());
+							java.sql.Date sqlDate1 = new java.sql.Date(dateF.getTime());
+
+								String query = "INSERT INTO utente (Nome, Cognome, Email, Password, CV, Skill, Controllo, DataI, DataF )  VALUES ('"+ nome + "' , + '" + cognome + "'  ,  '" + email + "'  ,'" + password + "'  , '"+ cv + "', '"+ sk+ "' , '"+ c +"', '"+sqlDate+"','"+sqlDate1+"');";
+								Statement stmt2 = connection.createStatement();
+								int i = stmt2.executeUpdate(query);
+								
+								 if (i > 0) {
+							           
+									 Coompetenze competenze =  new Coompetenze();
+										competenze.show();
+										Singup.setVisible(false);
+										
+									 
+									 
+							       } else {
+							       
+							    	SingUpa Singup = new SingUpa();
+							    	Singup.show();
+							    	Singup.setVisible(false);
+							    	   
+							    	   
+							       }
+							    } catch (Exception e1) {
+							       System.out.println(e1);
+							    }
+							
+						
+						
+						
+					
 					
 						
 					}

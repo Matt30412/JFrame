@@ -15,20 +15,19 @@ import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Desktop.Action;
 import java.text.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.io.*;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+import javax.swing.JButton;
+
+
 public class Coompetenze extends JFrame {
 	private JTextField textdatI;
 	private JTextField textdataF;
@@ -96,12 +95,12 @@ public class Coompetenze extends JFrame {
 		getContentPane().add(lblNewLabel_3);
 		
 		
-		JLabel lblNewLabel_4 = new JLabel("    Inserie file (opzionale)");
-		lblNewLabel_4.setBounds(50, 133, 168, 14);
+		JLabel lblNewLabel_4 = new JLabel("    Inserie directory  file (opzionale)");
+		lblNewLabel_4.setBounds(33, 133, 200, 14);
 		getContentPane().add(lblNewLabel_4);
 		
 		JTextArea textblob = new JTextArea();
-		textblob.setBounds(60, 153, 133, 45);
+		textblob.setBounds(43, 156, 160, 27);
 		getContentPane().add(textblob);
 		
 		JLabel lblNewLabel_5 = new JLabel("Voto Skill: ");
@@ -120,7 +119,7 @@ public class Coompetenze extends JFrame {
 		buttonC.setForeground(new Color(0, 0, 0));
 		buttonC.setBackground(new Color(255, 255, 255));
 		buttonC.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public <BufferReader> void actionPerformed1(ActionEvent e) throws IOException {
 				
 					String votoskill = textVotoSkill.getText();
 					String competenze = textArea.getText();
@@ -132,7 +131,10 @@ public class Coompetenze extends JFrame {
 					 try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/SM", "root", "")) {
 						
 						 
-						 
+//						InputStream is = new FileInputStream("data.txt");
+//						Reader rdr = new InputStreamReader(is, StandardCharsets.ISO_8859_1);
+						
+						
 						 
 						 
 						 int  voto = Integer.parseInt(votoskill);
@@ -142,8 +144,8 @@ public class Coompetenze extends JFrame {
 						
 						 
 						 
-						 String pdfFile1 = textblob.getText();
-						 File pdfFile = new File("path/to/pdf/file.pdf");
+//						 String pdfFile1 = textblob.getText();
+//						 File pdfFile = new File("path/to/pdf/file.pdf");
 						
 //						 FileInputStream inputStream = new FileInputStream(pdfFile);
 						 //Ti fai inserire il nome file
@@ -157,10 +159,35 @@ public class Coompetenze extends JFrame {
 							String repository = textblob.getText();
 						    FileInputStream is = new FileInputStream( repository );
 						    Reader rdr = new InputStreamReader(is, StandardCharsets.ISO_8859_1);	
+						
 						    
-					String sql = "INSET INTO competenze (Competenze, Email, dataInizio, dataFine, votoskill, CompetenzeMB) VALUE('"+competenze+"','"+Email+"','"+sqlDate+"','"+sqlDate1+"', '"+voto+"', '"+pdfFile+"', ?);";	
-					Statement stmt2 = connection.createStatement();
-					stmt2.executeUpdate(sql);
+						    
+					BufferedReader br = new BufferedReader(new FileReader(Blob));	    
+						    
+					String line = null;
+			        while ((line = br.readLine()) != null)
+			        {
+			            String tmp[] = line.split(",");
+			          competenze = tmp[0];
+			          
+
+			            System.out.println(competenze + "\t");
+			            
+			            
+			            String sql = "INSET INTO competenze (competenze) VALUE('"+competenze+"');";	
+						Statement stmt = connection.createStatement();
+						stmt.executeUpdate(sql);
+			           
+			        }
+					 
+						
+						
+					
+						    
+						    
+					String sql = "INSET INTO competenze (Competenze, Email, dataInizio, dataFine, votoskill, CompetenzeMB) VALUE('"+competenze+"','"+Email+"','"+sqlDate+"','"+sqlDate1+"', '"+voto+"', ?);";	
+					Statement s = connection.createStatement();
+					s.executeUpdate(sql);
 						 
 					 } catch (SQLException | ParseException e1) {
 					        System.out.println("Errore durante l'accesso al database: " + e1.getMessage());
@@ -168,19 +195,26 @@ public class Coompetenze extends JFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-						 
+						
+					 
 					 comp.setVisible(false);
 					 comp = new Coompetenze();
 				
 				
 			
-				
+					
 				
 				
 				
 			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
-		buttonC.setBounds(60, 224, 158, 27);
+		buttonC.setBounds(114, 224, 158, 27);
 		getContentPane().add(buttonC);
 		
 		Button buttonInsert = new Button("Inserisci Competenze");
@@ -215,7 +249,7 @@ public class Coompetenze extends JFrame {
 					
 			}
 		});
-		buttonInsert.setBounds(238, 224, 127, 27);
+		buttonInsert.setBounds(278, 224, 127, 27);
 		getContentPane().add(buttonInsert);
 		
 		JLabel lblNewLabel_51 = new JLabel("Voto Skill: ");
@@ -227,6 +261,21 @@ public class Coompetenze extends JFrame {
 		getContentPane().add(textVotoSkill);
 		textVotoSkill.setColumns(10);
 		
+		JButton btnHomePage = new JButton("Home Page");
+		btnHomePage.setBounds(0, 224, 108, 27);
+		getContentPane().add(btnHomePage);
 		
-	}
-}
+		btnHomePage.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				MainFrame frame = new MainFrame();
+				frame.show();
+				
+			}
+		
+		
+	});
+	}}
+

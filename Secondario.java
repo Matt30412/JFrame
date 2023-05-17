@@ -100,11 +100,10 @@ public class Secondario extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-			MainFrame Login = new MainFrame();
-			Login.show();
-		
-				MainFrame frame = new MainFrame();
-//				frame.show();
+	
+				
+				CVPage cvpage = new CVPage();
+				cvpage.show();
 				DataBase.setVisible(false);
 				
 			}
